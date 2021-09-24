@@ -5,34 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+    <link rel="icon" type="image/png" href="/images/icons/favicon.png"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/slick/slick.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/MagnificPopup/magnific-popup.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -49,11 +49,11 @@
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                    <a href="/#" class="flex-c-m trans-04 p-lr-25">
                         راهنمای خرید و قوانین
                     </a>
 
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                    <a href="/#" class="flex-c-m trans-04 p-lr-25">
                         اکانت من
                     </a>
                 </div>
@@ -64,7 +64,7 @@
             <nav class="limiter-menu-desktop container">
 
                 <!-- Logo desktop -->
-                <a href="/" class="logo">
+                <a href="//" class="logo">
                     <img src="images/icons/logo-01.png" alt="IMG-LOGO">
                 </a>
 
@@ -73,10 +73,10 @@
                     <ul class="main-menu">
 
                         <li class="active-menu">
-                            <a href="/">صفحه اصلی</a>
+                            <a href="//">صفحه اصلی</a>
                         </li>
                         <li>
-                            <a href="/">تماس با ما</a>
+                            <a href="//">تماس با ما</a>
                         </li>
                     </ul>
                 </div>
@@ -99,7 +99,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+            <a href="/index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -112,7 +112,7 @@
                 <i class="zmdi zmdi-shopping-cart"></i>
             </div>
 
-            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+            <a href="/#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
                 <i class="zmdi zmdi-favorite-outline"></i>
             </a>
         </div>
@@ -130,10 +130,10 @@
     <div class="menu-mobile">
         <ul class="main-menu-m">
             <li>
-                <a href="/">صفحه اصلی</a>
+                <a href="//">صفحه اصلی</a>
             </li>
             <li>
-                <a href="/">تماس با ما</a>
+                <a href="//">تماس با ما</a>
             </li>
         </ul>
     </div>
@@ -178,7 +178,7 @@
                     </div>
 
                     <div class="header-cart-item-txt p-t-8">
-                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                        <a href="/single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             کارت ویزیت وکیل
                         </a>
 
@@ -194,7 +194,7 @@
                     </div>
 
                     <div class="header-cart-item-txt p-t-8">
-                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                        <a href="/single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             تراکت فروشگاه کالای خانه
                         </a>
 
@@ -210,7 +210,7 @@
                     </div>
 
                     <div class="header-cart-item-txt p-t-8">
-                        <a href="single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                        <a href="/single.php" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             وکتور بکگراند
                         </a>
 
@@ -227,7 +227,7 @@
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full">
-                    <a href="checkout.php" class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
+                    <a href="/checkout.php" class="flex-c-m stext-101 cl0 size-107 w-100 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
                         مشاهده سبد خرید و پرداخت
                     </a>
                 </div>

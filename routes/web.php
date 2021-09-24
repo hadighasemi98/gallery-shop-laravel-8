@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('frontend.products.all');
 });
 
-// Route::get('home', function () {
-   
-// });
+Route::get('/adminPanel/admin', function () {
+    return view('frontend.panel.admin');
+});
+
+Route::get('/adminPanel/users', function () {
+    return view('frontend.panel.users.users');
+});
+
