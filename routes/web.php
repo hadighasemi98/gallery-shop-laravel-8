@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Category;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +18,15 @@ Route::get('/', function () {
     return view('frontend.products.all');
 });
 
-Route::get('/adminPanel/admin', function () {
-    return view('frontend.panel.admin');
+Route::prefix('admin-panel')->group(function(){
+    Route::get('/' , function () {return view('frontend.panel.admin'); });
+    Route::get('/users' , function () {return view('frontend.panel.users.users'); });
+    
+    Route::prefix('category')->group(function(){
+        Route::get('/' , [CategoryController::class , 'index'])->name('category.list');
+        Route::get('/form' , function () {return view('frontend.panel.categories.add-categories'); });
+        Route::post('/added' , [CategoryController::class , 'add'])->name('category.added');   
+    });        
 });
 
-Route::get('/adminPanel/users', function () {
-    return view('frontend.panel.users.users');
-});
 
