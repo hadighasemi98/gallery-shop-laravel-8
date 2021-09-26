@@ -23,10 +23,18 @@ Route::prefix('admin-panel')->group(function(){
     Route::get('/users' , function () {return view('frontend.panel.users.users'); });
     
     Route::prefix('category')->group(function(){
-        Route::get('/' , [CategoryController::class , 'index'])->name('category.list');
+        Route::get('' , [CategoryController::class , 'index'])->name('category.list');
+       
         Route::get('/form' , function () {return view('frontend.panel.categories.add-categories'); });
         Route::post('/added' , [CategoryController::class , 'add'])->name('category.added');   
-    });        
+       
+        Route::delete('/delete/{category_id}' , [CategoryController::class , 'delete'])->name('category.delete'); 
+
+        Route::get('/edit/{category_id}' , [CategoryController::class , 'edit'])->name('category.edit.form');   
+        Route::put('/updated/{category_id}' , [CategoryController::class , 'update'])->name('category.updated');   
+    });
+    
+    
 });
 
 
