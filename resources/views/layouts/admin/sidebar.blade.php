@@ -22,13 +22,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="products-add.php" class="nav-link">
+                                <a href="{{ route('product.form') }}" class="nav-link">
                                     <i class="fa fa-plus nav-icon"></i>
                                     <p>افزودن محصول</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="products.php" class="nav-link">
+                                <a href="{{route('product.list')}}" class="nav-link">
                                     <i class="fa fa-list nav-icon"></i>
                                     <p>لیست محصولات</p>
                                 </a>

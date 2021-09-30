@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,13 +27,23 @@ Route::prefix('admin-panel')->group(function(){
     Route::prefix('category')->group(function(){
         Route::get('' , [CategoryController::class , 'index'])->name('category.list');
        
-        Route::get('/form' , function () {return view('frontend.panel.categories.add-categories'); });
-        Route::post('/added' , [CategoryController::class , 'add'])->name('category.added');   
+        Route::get('/form' , [CategoryController::class , 'add_form'])->name('category.form') ;
+        Route::post('/added' , [CategoryController::class , 'added'])->name('category.added');   
        
         Route::delete('/delete/{category_id}' , [CategoryController::class , 'delete'])->name('category.delete'); 
 
         Route::get('/edit/{category_id}' , [CategoryController::class , 'edit'])->name('category.edit.form');   
         Route::put('/updated/{category_id}' , [CategoryController::class , 'update'])->name('category.updated');   
+    });
+
+    Route::prefix('/product')->group(function(){
+        Route::get('' , [ProductController::class , 'index'])->name('product.list');
+
+        Route::get('/form' , [ProductController::class , 'add_form'])->name('product.form');
+        Route::post('/added' , [ProductController::class , 'added'])->name('product.added');
+
+
+
     });
     
     

@@ -15,8 +15,13 @@ class CategoryController extends Controller
 
         return view('frontend.panel.categories.categories',$data);
     }
+
+    public function add_form ()
+    {
+        return view('frontend.panel.categories.add-categories');
+    }
     
-    public function add (AddCategoryRequest $request)
+    public function added (AddCategoryRequest $request)
     {
         $validData = $request->validated();
 

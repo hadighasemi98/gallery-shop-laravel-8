@@ -12,7 +12,7 @@
             <h1 class="m-0 text-dark">
                 <a class="nav-link drawer" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                 دسته بندی ها
-                <a class="btn btn-primary float-left text-white py-2 px-4" href="category/form">افزودن دسته بندی جدید</a>
+                <a class="btn btn-primary float-left text-white py-2 px-4" href="{{route('category.form')}}">افزودن دسته بندی جدید</a>
             </h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -94,7 +94,7 @@
   $(document).ready( function () {
     $('#deleteBtn').click( function(){    
       $.ajax({
-        url: '{{ route('category.delete',$cate->id) }}',
+        url: '',
         type: 'DELETE',
         data: {movie:movie}, //<-----this should be an object.
         contentType:'application/json',  // <---add this
