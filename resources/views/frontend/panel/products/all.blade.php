@@ -23,6 +23,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
+      @include('errors.message')
           <div class="row">
               <div class="col-12">
                   <div class="card">
@@ -59,28 +60,35 @@
                               <tr>
                                   <td> {{ $product->id }} </td}>
                                   <td>
-                                      <img src="dist/img/user6-128x128.jpg" class="product_img">
+                                      <img src="/{{ $product->thumbnail_url }}" class="product_img">
                                       {{ $product->title }}
                                  </td>
                                  <td>
 
-                                    {{ $product->category_id }}
+                                    {{ $product->category->title }}
                                  </td>                             
                                   
-                                  <td>{{ $product->owner_id }}</td>
-                                  <td>{{ $product->description }}</td>
+                                  <td>{{ $product->owner->name }}</td>
+                                  <td>{!! $product->description !!}</td>
                                   <td>
-                                      <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
+                                      <a href="{{ route('product.demo' , $product->id) }}" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
                                   </td>
                                   <td>
-                                      <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
+                                      <a href="{{ route('product.source' , $product->id) }}" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
                                   </td>
-                                  <td>{{ $product->price }}</td>
+                                  <td>{{ $product->price }} تومان </td>
                                   <td>{{ $product->created_at }}</td>
                                   <td>
                                       <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                      <a href="#" class="btn btn-default btn-icons"><i class="fa fa-trash"></i></a>
-                                  </td>
+                                      
+                                      <!-- Delete button -->
+                                      <form action="{{ route('product.delete' , $product->id) }}" method="post">
+                                      @csrf
+                                      @method('delete')
+                                      <button type='submit' class="btn btn-default btn-icons"><i class="fa fa-trash"></i></button>
+                                      </form>
+                                    
+                                    </td>
                               </tr>
                               @endforeach
                               </tr>
@@ -90,13 +98,7 @@
                   </div>
                   <!-- /.card -->
                   <div class="d-flex justify-content-center">
-                      <ul class="pagination mt-3">
-                          <li class="page-item"><a class="page-link" href="#">«</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۱</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۲</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۳</a></li>
-                          <li class="page-item"><a class="page-link" href="#">»</a></li>
-                      </ul>
+                    {{ $products->links() }}
                   </div>
               </div>
           </div>

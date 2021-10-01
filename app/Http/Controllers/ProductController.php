@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->categories = Category::all();
-        $this->products   = Product::all();;
+        $this->products   = Product::paginate(10);
     }
 
     public function index()
@@ -45,6 +45,7 @@ class ProductController extends Controller
         $lastId  = $this->products->max('id');
  
         try {
+            
             $basePath = 'products/' . ($lastId + 1) . '/'  ;
             $sourceImagePath = $basePath . 'source_url' . '_' . $validData['source_url']->getClientOriginalName();
             
@@ -52,6 +53,7 @@ class ProductController extends Controller
                 'demo_url'      => $validData['demo_url'],
                 'thumbnail_url' => $validData['thumbnail_url'],
             ];
+
             $imagesPath = ImageUploader::multiUploader($images, $basePath);
             ImageUploader::upload($sourceImagePath, $validData['source_url'], 'local_storage');
     
@@ -77,9 +79,27 @@ class ProductController extends Controller
 
             return back()->with('failed',$e->getMessage());
         }
+        
+    }
 
-        
-        
-        // return view('frontend.panel.products.add',compact('categories'));    
+    public function download_demo($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(public_path($product->demo_url));
+    }
+
+    public function download_source($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(storage_path('app/local_storage/'.$product->source_url));
+    }
+    
+    public function delete($product_id)
+    {
+        $product = $this->products->find($product_id)->delete();
+
+        if(!$product) { return back()->with('failed' , 'محصول پاک نشد'); }
+
+        return back()->with('success','با موفقیت پاک شد');
     }
 }

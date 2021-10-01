@@ -41,6 +41,11 @@ Route::prefix('admin-panel')->group(function(){
 
         Route::get('/form' , [ProductController::class , 'add_form'])->name('product.form');
         Route::post('/added' , [ProductController::class , 'added'])->name('product.added');
+        
+        Route::get('/{product_id}/download/demo' , [ProductController::class , 'download_demo'])->name('product.demo');
+        Route::get('/{product_id}/download/source' , [ProductController::class , 'download_source'])->name('product.source');
+        
+        Route::delete('/delete/{product_id}' , [ProductController::class , 'delete'])->name('product.delete');
 
 
 
