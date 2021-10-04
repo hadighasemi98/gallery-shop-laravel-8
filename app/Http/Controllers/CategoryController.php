@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\admin\AddCategoryRequest;
-use App\Http\Requests\admin\UpdateCategoryRequest;
+use App\Http\Requests\admin\categories\AddCategoryRequest;
+use App\Http\Requests\admin\categories\UpdateCategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller

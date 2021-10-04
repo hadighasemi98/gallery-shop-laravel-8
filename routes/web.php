@@ -46,8 +46,9 @@ Route::prefix('admin-panel')->group(function(){
         Route::get('/{product_id}/download/source' , [ProductController::class , 'download_source'])->name('product.source');
         
         Route::delete('/delete/{product_id}' , [ProductController::class , 'delete'])->name('product.delete');
-
-
+        
+        Route::get('/edit/{product_id}' , [ProductController::class , 'edit'])->name('product.edit.form');
+        Route::put('/update/{product_id}' , [ProductController::class , 'update'])->name('product.update');
 
     });
     

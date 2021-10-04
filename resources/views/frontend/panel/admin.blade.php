@@ -47,7 +47,7 @@
                       <div class="icon">
                           <i class="fa fa-sitemap"></i>
                       </div>
-                      <a href="#" class="small-box-footer">اطلاعات بیشتر</a>
+                      <a href="{{ route ('category.list') }}" class="small-box-footer">اطلاعات بیشتر</a>
                   </div>
               </div>
               <!-- ./col -->
@@ -62,7 +62,7 @@
                       <div class="icon">
                           <i class="fa fa-image"></i>
                       </div>
-                      <a href="#" class="small-box-footer">اطلاعات بیشتر</a>
+                      <a href="{{ route ('product.list') }} " class="small-box-footer">اطلاعات بیشتر</a>
                   </div>
               </div>
               <!-- ./col -->

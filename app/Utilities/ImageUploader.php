@@ -9,7 +9,7 @@ class ImageUploader {
 
     private const Delimiter = '_' ; 
 
-    public static function upload ($path,$file,$diskType )
+    public static function upload ($file,$path,$diskType )
     {
         // $fullPath = $path . $file . static::Delimiter . $file->getClientOriginalName();
         Storage::disk($diskType)->put($path, File::get($file));
@@ -23,7 +23,6 @@ class ImageUploader {
 
             $fullPath = $path . $key . static::Delimiter . $file->getClientOriginalName();
             self::upload($fullPath,$file,$diskType);
-            // Storage::disk($diskType)->put($fullPath, File::get($file));
             $imagePath += [$key => $fullPath] ;
         endforeach ;
 
