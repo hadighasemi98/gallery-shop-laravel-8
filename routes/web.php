@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
-use App\Models\Product;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,8 @@ Route::get('/', function () {
 
 Route::prefix('admin-panel')->group(function(){
     Route::get('/' , function () {return view('frontend.panel.admin'); });
-    Route::get('/users' , function () {return view('frontend.panel.users.users'); });
+    Route::get('/orders' , [OrderController::class , 'index' ] )->name('orders.list') ;
+    Route::get('/payments' , [PaymentController::class , 'index' ] )->name('payments.list') ;
     
     Route::prefix('category')->group(function(){
         Route::get('' , [CategoryController::class , 'index'])->name('category.list');
