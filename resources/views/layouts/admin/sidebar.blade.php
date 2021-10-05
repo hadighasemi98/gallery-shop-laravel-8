@@ -59,7 +59,7 @@
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="users" class="nav-link">
+                                <a href="{{route('users.list')}}" class="nav-link">
                                     <i class="fa fa-list nav-icon"></i>
                                     <p>لیست</p>
                                 </a>

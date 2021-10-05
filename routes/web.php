@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,19 @@ Route::prefix('admin-panel')->group(function(){
         Route::get('/edit/{product_id}' , [ProductController::class , 'edit'])->name('product.edit.form');
         Route::put('/update/{product_id}' , [ProductController::class , 'update'])->name('product.update');
 
+    });
+
+    Route::prefix('/users')->group(function(){
+        Route::get('' , [UserController::class , 'index' ])->name('users.list');
+        
+        Route::get('/form' , [UserController::class , 'add_form' ])->name('user.add.form');
+        Route::post('/added' , [UserController::class , 'added' ])->name('user.added');
+        
+        Route::get('/edit/{user_id}' , [UserController::class , 'edit' ])->name('user.edit.form');
+        Route::put('/update/{user_id}' , [UserController::class , 'update' ])->name('user.update');
+        
+        Route::delete('/delete/{user_id}' , [UserController::class , 'delete' ])->name('user.delete');
+        
     });
     
     
