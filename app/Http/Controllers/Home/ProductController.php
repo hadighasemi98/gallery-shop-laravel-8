@@ -14,5 +14,7 @@ class ProductController extends Controller
         return view('frontend.home.single' , compact('product' , 'similarProducts'));
     }
 
+    
+
 
 }
