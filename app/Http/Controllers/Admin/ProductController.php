@@ -50,13 +50,18 @@ class ProductController extends Controller
             'owner_id'      => $admin->id,
         ]);
 
-        return $this->uploadImages($addResult , $validData);
 
         if (!$addResult) {
             return back()->with('failed' , 'محصول اضافه نشد');
         }
 
+        if(! $this->uploadImages($addResult , $validData)){
+            return back()->with('failed', 'تصاویر محصول اضافه نشد');
+        }
+
         return back()->with('success' , 'محصول اضافه شد');
+
+
     }
     
     
@@ -93,8 +98,11 @@ class ProductController extends Controller
             return back()->with('failed', 'محصول بروزرسانی نشد') ;
         }
 
-        return $this->uploadImages($productId , $validData);
-        
+        if(!$this->uploadImages($productId , $validData)) {
+            return back()->with('failed', 'تصاویر آپلود نشدند');
+        }
+
+        return back()->with('success' , 'محصول بروزرسانی شد');
     }
 
 
@@ -141,10 +149,10 @@ class ProductController extends Controller
                 throw new \Exception('تصاویر آپدیت نشدند');
             }
 
-            return back()->with('success', 'تصاویر با موفقیت بروزرسانی شد');
+            return true;
             
         }catch(\Exception $e ) {
-            return back()->with('failed', $e->getMessage() . ' in line : ' . $e->getLine());
+            return false;
         }
     }
 
