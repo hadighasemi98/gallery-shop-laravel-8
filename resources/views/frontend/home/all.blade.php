@@ -4,6 +4,7 @@
 
 <!-- Product -->
 	<div class="bg0 m-t-23 p-b-140">
+        @include('errors.message')
 		<div class="container">
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -80,19 +81,19 @@
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=price&action=sort&value=10to100000" class="filter-link stext-106 trans-04">
                                         ۱۰ الی ۱۰۰ هزار تومان
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=price&action=sort&value=101000to200000" class="filter-link stext-106 trans-04">
                                         ۱۰۱ الی ۲۰۰ هزار تومان
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=price&action=sort&value=201to300000" class="filter-link stext-106 trans-04">
                                         ۲۰۱ الی ۳۰۰ هزار تومان
                                     </a>
                                 </li>
@@ -106,7 +107,7 @@
 
                             <ul>
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=orderby&action=default" class="filter-link stext-106 trans-04">
                                         پیش فرض
                                     </a>
                                 </li>
@@ -118,19 +119,19 @@
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+                                    <a href="?filter=orderby&action=newest" class="filter-link stext-106 trans-04 filter-link-active">
                                         جدیدترین
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=orderby&action=lowToHigh" class="filter-link stext-106 trans-04">
                                         قیمت:‌ کم به زیاد
                                     </a>
                                 </li>
 
                                 <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
+                                    <a href="?filter=orderby&action=highToLow" class="filter-link stext-106 trans-04">
                                         قیمت:‌زیاد به کم
                                     </a>
                                 </li>
