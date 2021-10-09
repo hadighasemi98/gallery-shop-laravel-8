@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PaymentController;
+
+use App\Http\Controllers\Home\BasketController;
+use App\Http\Controllers\Home\CheckoutController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +26,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('')->group( function () {
     Route::get('' , [HomeController::class , 'index'])->name('home.page');
     Route::get('/product/{product_id}' , [HomeProductController::class , 'show'])->name('home.product.show');
+    
+    Route::get('/add-to-basket/{product_id}'      , [BasketController::class , 'addToBasket'])->name('home.addToBasket');
+    Route::get('/remove-from-basket/{product_id}' , [BasketController::class , 'removeFromBasket'])->name('home.removeFromBasket');
+   
+    Route::get('/checkout/show' , [CheckoutController::class , 'show'])->name('home.checkout.show');
+
 });
 
 Route::prefix('admin-panel')->group(function(){
