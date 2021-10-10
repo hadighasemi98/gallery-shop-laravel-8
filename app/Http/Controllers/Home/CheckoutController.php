@@ -11,17 +11,14 @@ class CheckoutController extends Controller
     private $minute ;
     public function show()
     {
-        $basket = json_decode(Cookie::get('basket'), true);
-        if($basket){
-            $totalPrice = array_sum(array_column($basket , 'price'));
-        }
+        $basket = is_null(Cookie::get('basket')) ? [] : json_decode(Cookie::get('basket'), true) ;
+        $totalPrice = array_sum(array_column($basket , 'price'));
 
         $data = [
             'basket'     => $basket ,
-            'totalPrice' => $totalPrice ?? 0,
+            'totalPrice' => $totalPrice,
         ];
         return view('frontend.home.checkout' , $data);
     }
-
 
 }

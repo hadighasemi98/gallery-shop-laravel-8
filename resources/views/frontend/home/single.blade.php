@@ -19,7 +19,8 @@
 			</span>
         </div>
     </div>
-
+<br>
+@include('errors.message')
 
     <!-- Product Detail -->
     <section class="sec-product-detail bg0 p-t-65 p-b-60">

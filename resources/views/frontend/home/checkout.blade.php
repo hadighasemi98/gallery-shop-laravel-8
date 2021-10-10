@@ -29,7 +29,7 @@
                                     <th class="column-2"></th>
                                     <th class="column-3">قیمت</th>
                                 </tr>
-                                @if(!( $basket == null ))
+                                @if(!is_null($basket) )
                                     @foreach ($basket as $id => $value)
                                     <tr class="table_row">
                                         <td class="column-1">
