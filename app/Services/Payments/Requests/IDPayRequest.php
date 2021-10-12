@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Services\Payments\Request;
+namespace App\Services\Payments\Requests;
 
 use App\Services\Payments\Contracts\RequestInterface;
 

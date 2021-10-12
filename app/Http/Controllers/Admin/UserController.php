@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\users\UserAddRequest;
 use App\Http\Requests\admin\users\UserUpdateRequest;
 use App\Models\User;
-
+    
 class UserController extends Controller
 {
     public function index()

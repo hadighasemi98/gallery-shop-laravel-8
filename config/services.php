@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'gateways' => [
+        'id_pay' => [
+            'api_key' => '5e310198-cde2-4f05-8d1d-65bbc784d509',
+        ]
+    ]
+
 ];

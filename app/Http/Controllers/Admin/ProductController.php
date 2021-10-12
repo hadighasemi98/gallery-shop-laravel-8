@@ -108,7 +108,6 @@ class ProductController extends Controller
 
     public function uploadImages($createdProduct , $validData)
     {
-
         try {
 
             $basePath = 'products/' . $createdProduct->id . '/'  ;

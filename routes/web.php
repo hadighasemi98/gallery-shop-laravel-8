@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PaymentController;
 
+use App\Http\Controllers\PaymentController as PayService;
+
 use App\Http\Controllers\Home\BasketController;
 use App\Http\Controllers\Home\CheckoutController;
 use App\Http\Controllers\Home\HomeController;
@@ -31,6 +33,8 @@ Route::prefix('')->group( function () {
     Route::get('/remove-from-basket/{product_id}' , [BasketController::class , 'removeFromBasket'])->name('home.removeFromBasket');
    
     Route::get('/checkout/show' , [CheckoutController::class , 'show'])->name('home.checkout.show');
+    
+    Route::get('/pay' , [PayService::class , 'pay']);
 
 });
 
