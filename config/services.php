@@ -32,7 +32,7 @@ return [
 
     'gateways' => [
         'id_pay' => [
-            'api_key' => '5e310198-cde2-4f05-8d1d-65bbc784d509',
+            'api_key' => '5e310198-cde2-4f05-8d1d-65bbc784d509', 
         ]
     ]
 

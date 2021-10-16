@@ -34,9 +34,14 @@ Route::prefix('')->group( function () {
    
     Route::get('/checkout/show' , [CheckoutController::class , 'show'])->name('home.checkout.show');
     
-    Route::get('/pay' , [PayService::class , 'pay']);
-
 });
+
+
+Route::prefix('payment')->group(function(){
+    Route::post('pay' , [PayService::class , 'pay'] )->name('payment.pay');
+    Route::post('callback' , [PayService::class , 'callback'] )->name('payment.callback');;
+});
+
 
 Route::prefix('admin-panel')->group(function(){
     Route::get('/' , function () {return view('frontend.panel.admin'); });
@@ -86,5 +91,4 @@ Route::prefix('admin-panel')->group(function(){
     
     
 });
-
 

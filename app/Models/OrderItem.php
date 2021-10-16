@@ -10,4 +10,8 @@ class OrderItem extends Model
     use HasFactory;
     public $guarded = [];
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class) ;
+    }
 }
