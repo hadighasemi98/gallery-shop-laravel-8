@@ -21,12 +21,17 @@ class PaymentService {
 
     public function pay()
     {
-        $this->findProviders()->pay() ;
+       return $this->findProviders()->pay() ;
+    }
+
+    public function verify()
+    {
+       return $this->findProviders()->verify() ;
     }
 
     private function findProviders()
     {
-        $className = 'App\\Services\\Payments\Providers\\' . $this->providerName;
+        $className = 'App\Services\Payments\Providers\\' . $this->providerName;
 
         if(!class_exists($className)){
             throw new ProviderNotFindException('درگاه پرداخت انتخابی پیدا نشد');

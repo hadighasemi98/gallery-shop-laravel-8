@@ -4,30 +4,23 @@ namespace App\Services\Payments\Requests;
 
 use App\Services\Payments\Contracts\RequestInterface;
 
-class IDPayRequest implements RequestInterface{
+class IDPayVerifyRequest implements RequestInterface{
 
-    private $user ;
-    private $amount ;
+    private $id ;
     private $order_id ;
     private $apiKey ;
 
     public function __construct (array $data)
     {
-        $this->amount = $data['amount'];
-        $this->user   = $data['user'];
+        $this->id       = $data['id'];
         $this->order_id = $data['order_id'];
-        $this->apiKey = $data['apiKey'];
+        $this->apiKey   = $data['apiKey'];
     }
 
-    public function getUser()
+    public function getId()
     {
-        return $this->user ;
+        return $this->id ;
     }
-
-    public function getAmount()
-    {
-        return $this->amount * 10 ;
-    } 
     
     public function getOrder_id()
     {
