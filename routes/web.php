@@ -6,12 +6,13 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PaymentController;
 
-use App\Http\Controllers\PaymentController as PayService;
+// use App\Http\Controllers\PaymentController as PayService;
 
 use App\Http\Controllers\Home\BasketController;
 use App\Http\Controllers\Home\CheckoutController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
+use App\Http\Controllers\PaymentControllerCopy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,14 +39,17 @@ Route::prefix('')->group( function () {
 
 
 Route::prefix('payment')->group(function(){
-    Route::post('pay' , [PayService::class , 'pay'] )->name('payment.pay');
-    Route::post('callback' , [PayService::class , 'callback'] )->name('payment.callback');;
+    Route::post('pay' , [PaymentControllerCopy::class , 'pay'] )->name('payment.pay');
+    Route::post('callback' , [PaymentControllerCopy::class , 'callback'] )->name('payment.callback');;
 });
 
 
 Route::prefix('admin-panel')->group(function(){
     Route::get('/' , function () {return view('frontend.panel.admin'); });
+    
     Route::get('/orders' , [OrderController::class , 'index' ] )->name('orders.list') ;
+    Route::get('/orders-item/{order_item}' , [OrderController::class , 'get_orderItem' ] )->name('orderItem.list') ;
+    
     Route::get('/payments' , [PaymentController::class , 'index' ] )->name('payments.list') ;
     
     Route::prefix('category')->group(function(){

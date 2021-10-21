@@ -10,7 +10,7 @@
           <div class="col-12">
             <h1 class="m-0 text-dark">
                 <a class="nav-link drawer" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-                پرداخت ها</h1>
+                محصولات سفارش شماره ({{$orderItem}})</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -24,7 +24,7 @@
               <div class="col-12">
                   <div class="card">
                       <div class="card-header">
-                          <h3 class="card-title">لیست پرداخت ها</h3>
+                          <h3 class="card-title">لیست سفارشات</h3>
 
                           <div class="card-tools">
                               <div class="input-group input-group-sm" style="width: 150px;">
@@ -41,37 +41,33 @@
                           <table class="table table-hover mb-0">
                               <tbody>
                               <tr class="text-center">
-                                  <th>تاریخ</th>
-                                  <th>قیمت</th>
-                                  <th>آیدی سفارش</th>
-                                  <th>کاربر</th>
-                                  <th>درگاه پرداخت</th>
-                                  <th>تراکنش</th>
-                                  <th  >کد رهگیری</th>
+                                <th>عنوان</th>
+                                <th>دسته بندی</th>
+                                <th>لینک دمو</th>
+                                <th>لینک دانلود</th>
+                                <th>قیمت</th>
                               </tr>
-                              @foreach ($payments as $payment)
-                                <tr class="text-center" >
-                                    <td>{{$payment->created_at}}</td>
-                                    <td>{{$payment->order->amount}}</td>
-                                    <td>{{$payment->id}}</td>
-                                    <td>{{$payment->order->user->name}}</td>
-                                    <td>
-                                        {{$payment->gateways}}
-                                    </td>
-                                    <td>
-                                      <span class="badge bg-{{ $payment->status == 'paid' ? 'success' : 'danger' }} " > {{ $payment->status == 'paid' ? 'پرداخت شده' : 'پرداخت نشده' }} </span> 
-                                    </td>
-                                    <td>{{$payment->ref_code}}</td>
-                                </tr>
+                              @foreach($orders as $order)
+                              <tr class="text-center">
+                                  <td>{{ $order->product->title }}</td>
+                                  <td>{{ $order->product->category->title }}</td>
+                                  <td>
+                                      <a href="{{ route('product.demo' ,$order->product->id) }}" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
+                                  </td>
+                                  <td>
+                                      <a href="{{ route('product.source' , $order->product->id) }}" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
+                                  </td>
+                                  <td>{{ $order->product->price }}</td>
+                              </tr>
                               @endforeach
-                              
-                              </tbody></table>
+                              </tbody>
+                          </table>
                       </div>
                       <!-- /.card-body -->
                   </div>
                   <!-- /.card -->
                   <div class="d-flex justify-content-center">
-                      {{ $payments->links() }}
+                      
                   </div>
               </div>
           </div>
@@ -82,5 +78,10 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 
 @endsection

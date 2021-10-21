@@ -12,6 +12,7 @@ use App\Utilities\ImageUploader;
 
 class ProductController extends Controller
 {
+    private $keyForLang = ['key' => 'محصول'];
     private $categories ;
     private $products ;
     private $addResult ;
@@ -52,26 +53,22 @@ class ProductController extends Controller
 
 
         if (!$addResult) {
-            return back()->with('failed' , 'محصول اضافه نشد');
+            return back()->with('failed', __('conditions.failed_add' , $this->keyForLang) );
         }
 
         if(! $this->uploadImages($addResult , $validData)){
-            return back()->with('failed', 'تصاویر محصول اضافه نشد');
+            return back()->with('failed', __('conditions.products.failed_upload_files'));
         }
 
-        return back()->with('success' , 'محصول اضافه شد');
+        return back()->with('success' , __('conditions.success_add', $this->keyForLang ));
 
 
     }
     
-    
     public function delete($product_id)
     {
         $product = $this->products->find($product_id)->delete();
-
-        if(!$product) { return back()->with('failed' , 'محصول پاک نشد'); }
-
-        return back()->with('success','با موفقیت پاک شد');
+        return back()->with('success', __('conditions.success_delete' , $this->keyForLang));
     }
 
     public function edit($product_id)
@@ -95,14 +92,14 @@ class ProductController extends Controller
         ]);
 
         if(!$updatedProduct){
-            return back()->with('failed', 'محصول بروزرسانی نشد') ;
+            return back()->with('failed', __('conditions.failed_update' , $this->keyForLang) );
         }
 
-        if(!$this->uploadImages($productId , $validData)) {
-            return back()->with('failed', 'تصاویر آپلود نشدند');
+        if(!$this->uploadImages($productId , $validData) ) {
+            return back()->with('failed', __('conditions.failed_upload_files') );
         }
 
-        return back()->with('success' , 'محصول بروزرسانی شد');
+        return back()->with('failed', __('conditions.success_update' , $this->keyForLang) );
     }
 
 
@@ -145,7 +142,7 @@ class ProductController extends Controller
             $updatedProduct = $createdProduct->update($data);
 
             if(!$updatedProduct){
-                throw new \Exception('تصاویر آپدیت نشدند');
+                throw new \Exception(__('conditions.failed_upload_files'));
             }
 
             return true;

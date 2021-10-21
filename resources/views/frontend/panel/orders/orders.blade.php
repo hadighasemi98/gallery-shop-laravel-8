@@ -40,26 +40,28 @@
                       <div class="table table-striped table-valign-middle mb-0">
                           <table class="table table-hover mb-0">
                               <tbody>
-                              <tr>
-                                  <th>مشاهده سفارش</th>
-                                  <th>تاریخ</th>
+                              <tr class="text-center">
                                   <th>کاربر</th>
                                   <th>مبلغ</th>
                                   <th>کد رهگیری</th>
                                   <th>وضعیت</th>
+                                  <th>تاریخ</th>
+                                  <th>مشاهده سفارش</th>
                               </tr>
                               @foreach($orders as $order)
-                              <tr>
+                              <tr class="text-center">
                                   <td>{{ $order->user->name }}</td>
                                   <td>{{ $order->amount }}</td>
                                   <td>{{ $order->ref_code }}</td>
                                   <td>
-                                      <span class="badge bg-success">موفق</span>
+                                    <span class="badge bg-{{ $order->status == 'paid' ? 'success' : 'danger' }} " > {{ $order->status == 'paid' ? 'موفق' : 'ناموفق' }} </span> 
                                   </td>
                                   <td>{{ $order->created_at }}</td>
                                   <td>
-                                      <button class="btn btn-default btn-icons" data-toggle="modal" data-target="#order_items" title="مشاهده سبد خرید"><i class="fa fa-shopping-cart"></i></button>
-                                  </td>
+                                      <a href="{{ route('orderItem.list', $order->id) }}">
+                                        <button class="btn btn-default btn-icons"  title="مشاهده سبد خرید"><i class="fa fa-shopping-cart"></i></button>
+                                      </a>
+                                    </td>
                               </tr>
                               @endforeach
                               </tbody>
@@ -69,13 +71,7 @@
                   </div>
                   <!-- /.card -->
                   <div class="d-flex justify-content-center">
-                      <ul class="pagination mt-3">
-                          <li class="page-item"><a class="page-link" href="#">«</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۱</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۲</a></li>
-                          <li class="page-item"><a class="page-link" href="#">۳</a></li>
-                          <li class="page-item"><a class="page-link" href="#">»</a></li>
-                      </ul>
+                      
                   </div>
               </div>
           </div>
@@ -99,74 +95,38 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body p-0">
                     <div class="table table-striped table-valign-middle mb-0">
                         <table class="table table-hover mb-0">
                             <tbody>
-                            <tr>
-                                <th>عنوان</th>
-                                <th>دسته بندی</th>
-                                <th>لینک دمو</th>
-                                <th>لینک دانلود</th>
-                                <th>قیمت</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/user6-128x128.jpg" class="product_img">
-                                    کارت ویزیت مشاور املاک</td>
-                                <td>کارت ویزیت</td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>۳۹۰۰۰ تومان</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/user6-128x128.jpg" class="product_img">
-                                    کارت ویزیت مشاور املاک</td>
-                                <td>کارت ویزیت</td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>۳۹۰۰۰ تومان</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/user6-128x128.jpg" class="product_img">
-                                    کارت ویزیت مشاور املاک</td>
-                                <td>کارت ویزیت</td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>۳۹۰۰۰ تومان</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/user6-128x128.jpg" class="product_img">
-                                    کارت ویزیت مشاور املاک</td>
-                                <td>کارت ویزیت</td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
-                                </td>
-                                <td>۳۹۰۰۰ تومان</td>
-                            </tr>
-                            </tbody></table>
+                                <tr class="text-center">
+                                    <th>عنوان</th>
+                                    <th>دسته بندی</th>
+                                    <th>لینک دمو</th>
+                                    <th>لینک دانلود</th>
+                                    <th>قیمت</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <td>
+                                        <img src="" class="product_img">
+                                        {{ $orders }}
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <a href="" class="btn btn-default btn-icons" title="لینک دمو"><i class="fa fa-link"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-default btn-icons" title="لینک دانلود"><i class="fa fa-link"></i></a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن (ESC) </button>
                 </div>
             </div>
         </div>

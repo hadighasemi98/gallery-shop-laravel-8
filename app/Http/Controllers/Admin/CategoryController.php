@@ -9,12 +9,12 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    private $keyForLang = ['key' => ' دسته بندی '] ;
+
     public function index ()
     {
         $category = Category::paginate(10);
-        $data = ['category' => $category];
-
-        return view('frontend.panel.categories.categories',$data);
+        return view('frontend.panel.categories.categories',compact('category'));
     }
 
     public function add_form ()
@@ -33,17 +33,16 @@ class CategoryController extends Controller
 
         if (!$result) 
         {
-            return back()->with('failed','دسته بندی اضافه نشد ') ;
+            return back()->with('failed' , __('conditions.failed_add' , $this->keyForLang ));
         }
           
-        return back()->with('success','دسته بندی اضافه شد ');
+        return back()->with('success' , __('conditions.success_add' , $this->keyForLang));
     }
 
     public function delete ($category_id)
     {   
-        $category = Category::find($category_id);
-        $category->delete();
-        return back()->with('success','دسته بندی با موفقیت حذف شد');
+        Category::findOrFail($category_id)->delete();
+        return back()->with('success',__('conditions.products.success_delete' , $this->keyForLang));
     }
 
     public function edit ($category_id)
@@ -58,7 +57,7 @@ class CategoryController extends Controller
     {   
         $validData = $request->validated();
 
-        $category = Category::find($category_id);
+        $category = Category::findOrFail($category_id);
 
         $result = $category->update([
             'title' => $validData['title'],
@@ -66,11 +65,11 @@ class CategoryController extends Controller
             
         ]);
         if(!$result ){
-            return back()->with('failed','دسته بندی با موفقیت بروزرسانی نشد');
+            return back()->with('failed', __('conditions.failed_update' , $this->keyForLang)) ;
 
         }
 
-        return back()->with('success','دسته بندی با موفقیت بروزرسانی شد');
+        return back()->with('success' , __('conditions.success_update' , $this->keyForLang) );
     }
     
 

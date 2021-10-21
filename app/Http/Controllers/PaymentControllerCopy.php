@@ -16,20 +16,13 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-class PaymentController extends Controller
+class PaymentControllerCopy extends Controller
 {
-    public function  pay(PayRequest $request)
+    public function pay(PayRequest $request)
     {        
-        $validData = $request->validated();
-
-        $user = User::firstOrCreate([
-            'email'   => $validData['email'],
-        ],[
-            'name'   => $validData['name'],
-            'mobile'   => $validData['mobile'],
-        ]);
-
         try {
+
+            $user = $this->setUser($request);
 
             $orderItem = json_decode(Cookie::get('basket'),true);
 
@@ -43,30 +36,11 @@ class PaymentController extends Controller
 
             $ref_code = Str::random(30) ;
 
-            $createdOrder = Order::Create([
-                'amount' => $totalPrice,
-                'user_id' => $user->id,
-                'status' => 'unpaid',
-                'ref_code' => $ref_code,
-            ]);
+            $createdOrder = $this->setOrder($totalPrice , $user , $ref_code);
 
-            $orderItemForCreateOrder = $products->map(function ($product){
-                
-                $currentProduct = $product->only('price','id') ;
-                $currentProduct['product_id'] = $currentProduct['id'];
-                unset($currentProduct['id']);
+            $this->setOrderItems($products,$createdOrder);
 
-                return $currentProduct ;
-            });
-            
-            $createdOrder->orderItems()->createMany($orderItemForCreateOrder->toArray());
-
-            Payment::create([
-                'gateways' => 'idPay',
-                'ref_code'   => $ref_code,
-                'order_id' => $createdOrder->id,
-                'status'   => 'unpaid',
-            ]);
+            $this->setPayment($createdOrder , $ref_code);
             
             $idPayRequest = new IDPayRequest([
                 'amount'    => $totalPrice,
@@ -78,11 +52,63 @@ class PaymentController extends Controller
             $paymentService = new PaymentService(PaymentService::IDPAY , $idPayRequest);
             return $paymentService->pay();
 
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             return back()->with('failed' , $e->getMessage());
         }
         
     }
+
+    private function setUser($request){
+
+        $validData = $request->validated();
+
+        $user = User::firstOrCreate([
+            'email'   => $validData['email'],
+        ],[
+            'name'   => $validData['name'],
+            'mobile' => $validData['mobile'],
+        ]);
+
+        return $user ;
+    }
+    
+    private function  setOrderItems($products , $createdOrder){
+
+        $orderItemForCreateOrder = $products->map(function ($product){
+                
+            $currentProduct = $product->only('price','id') ;
+            $currentProduct['product_id'] = $currentProduct['id'];
+            unset($currentProduct['id']);
+
+            return $currentProduct ;
+        });
+        
+        $createdOrder->orderItems()->createMany($orderItemForCreateOrder->toArray());
+    }
+
+
+    private function  setOrder ($totalPrice , $user , $ref_code){
+
+        $createdOrder = Order::Create([
+            'amount' => $totalPrice,
+            'user_id' => $user->id,
+            'status' => 'unpaid',
+            'ref_code' => $ref_code,
+        ]);
+
+        return $createdOrder ;
+    }
+
+    private function  setPayment ($createdOrder , $ref_code){
+
+        Payment::create([
+            'gateways' => 'idPay',
+            'ref_code'   => $ref_code,
+            'order_id' => $createdOrder->id,
+            'status'   => 'unpaid',
+        ]);
+    }
+
 
     public function callback (Request $request)
     {
@@ -99,7 +125,7 @@ class PaymentController extends Controller
         $result = $paymentService->verify() ;
 
         if( !$result['status'] ){
-            return redirect()->route('home.checkout.show')->with('failed',__('conditions.basket.empty_basket'));
+            return redirect()->route('home.checkout.show')->with('failed',__('conditions.basket.failed_payment'));
         }
 
         $currentPayment = Payment::where('ref_code' , $result['data']['order_id'])->first() ;

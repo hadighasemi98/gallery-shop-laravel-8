@@ -9,6 +9,8 @@ use App\Models\User;
     
 class UserController extends Controller
 {
+    private $keyForLang = ['key' => 'کاربر'];
+
     public function index()
     {
         $users = User::paginate(10);
@@ -33,9 +35,9 @@ class UserController extends Controller
         ]);
 
         if(!$createdUser){
-            return back()->with('failed', 'کاربر اضافه نشد');
+            return back()->with('failed', __('conditions.failed_add' , $this->keyForLang) );
         }
-        return back()->with('success', 'کاربر اضافه شد');
+        return back()->with('success', __('conditions.success_add' , $this->keyForLang) );
 
     }
 
@@ -58,17 +60,16 @@ class UserController extends Controller
         ]);
 
         if(!$user){
-            return back()->with('failed', 'کاربر بروزرسانی نشد' );
+            return back()->with('failed', __('conditions.failed_update' , $this->keyForLang) );
         }
 
-        return back()->with('success' , 'کاربر با موفقیت بروزرسانی شد');
+        return back()->with('success' , __('conditions.success_update' , $this->keyForLang) );
     }
 
     public function delete($user_id)
     {
-         User::findOrFail($user_id)->delete();
-
-        return back()->with('success','کاربر با موفقیت حذف شد');
+        User::findOrFail($user_id)->delete();
+        return back()->with('success', __('conditions.success_delete' , $this->keyForLang));
     }
 
 }

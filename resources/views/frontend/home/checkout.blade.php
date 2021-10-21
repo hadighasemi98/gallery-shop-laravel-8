@@ -103,7 +103,7 @@
 
                                 <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									{{$totalPrice }} هزار تومان
+									{{ $totalPrice }} هزار تومان
 								</span>
                                 </div>
                             </div>

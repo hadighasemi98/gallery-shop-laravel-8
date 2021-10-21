@@ -11,8 +11,8 @@ class CheckoutController extends Controller
     private $minute ;
     public function show()
     {
-        $basket = is_null(Cookie::get('basket')) ? [] : json_decode(Cookie::get('basket'), true) ;
-        $totalPrice = array_sum(array_column($basket , 'price'));
+        $basket = json_decode(Cookie::get('basket'), true) ;
+        $totalPrice = array_sum(array_column($basket ?? [] , 'price'));
 
         $data = [
             'basket'     => $basket ,

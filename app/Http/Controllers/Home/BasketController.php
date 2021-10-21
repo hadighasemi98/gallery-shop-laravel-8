@@ -26,11 +26,11 @@ class BasketController extends Controller
             ];
             $basket = json_encode($basket);
             Cookie::queue('basket', $basket, $this->minute);
-            return back()->with('success', 'محصول به سبد خرید اضافه شد');
+            return back()->with('success', __('conditions.basket.success_add' ));
         }
 
         if (isset($basket[$product->id])) {
-            return back()->with('success', 'محصول به سبد خرید اضافه شد');
+            return back()->with('warning', __('conditions.basket.already_add'));
         }
 
         # Add new one
@@ -41,7 +41,7 @@ class BasketController extends Controller
         ];
 
         Cookie::queue('basket', json_encode($basket), $this->minute);
-        return back()->with('success', 'محصول به سبد خرید اضافه شد');
+        return back()->with('success', __('conditions.basket.success_add' ));
     }
 
     public function removeFromBasket($product_id)
@@ -52,6 +52,6 @@ class BasketController extends Controller
             unset( $basket[$product_id] );
         }
         Cookie::queue('basket', json_encode($basket), $this->minute);
-        return back()->with('success', 'محصول از سبد خرید حذف شد');
+        return back()->with('success', __('conditions.basket.success_delete' ));
     }
 }
