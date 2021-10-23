@@ -16,7 +16,7 @@
   <p align="center">
     A website for selling your graphic files !
     <br />
-    <a href="https://github.com/hadighasemi98/gallery-shop-with-laravel"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/hadighasemi98/gallery-shop-laravel-8"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     
@@ -28,9 +28,9 @@
 
 This is a small shop created using the Laravel framework for PHP. It allows you to create and edit a product and displays a listing of recent products on your dashboard.
 
-![alt text](https://github.com/hadighasemi98/gallery-shop-with-laravel/blob/main/screenShot.jpg?raw=true)
+![alt text](https://github.com/hadighasemi98/gallery-shop-laravel-8/blob/main/screenShot.jpg?raw=true)
 
-![alt text](https://github.com/hadighasemi98/gallery-shop-with-laravel/blob/main/screenShot%20-%20cms.jpg?raw=true)
+![alt text](https://github.com/hadighasemi98/gallery-shop-laravel-8/blob/main/screenShot%20-%20cms.jpg?raw=true)
 
 -----
 <a name="item1"></a>
@@ -38,7 +38,7 @@ This is a small shop created using the Laravel framework for PHP. It allows you 
 * Users,categories,products,orders, and payment management
 * Mysql DB
 * Upload images service
-* Filltering categories
+* Filtering categories
 * Search products
 * Payment service
 -----
@@ -47,14 +47,13 @@ This is a small shop created using the Laravel framework for PHP. It allows you 
 
 In this project , I tried to implement the SOLID principle . It was my first project with Laravel 8.
 
-In CMS panel you can :
-
-	*Do CRUD operations .
-	*See your orders and check payments.
-	*Check order items in every order
-	*Easily extensible payment service
-	*Payment with mobile number and email
-	*Sending images and files that you bought with Email
+ In CMS panel you can :
+ - Do CRUD operations .
+ - See your orders and check payments.
+ - Check order items in every order
+ - Easily extensible payment service
+ - Payment with mobile number and email
+ - Sending images and files that you bought with Email
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -67,16 +66,42 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
+
 step 1 :
 initialize git flow
-```git init `
+
+```sh
+git init 
+```
 
 step 2 : 
 Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/hadighasemi98/gallery-shop-laravel-8
    ```
+   
+   step 3 : 
+   ```sh
+   cd gallery-shop-with-laravel
+   ```
+   
+step 4 : 
+Install composer
+   ```sh
+   composer install
+   ```
+   
+step 5 : 
 
+ 1. change ". env.example " file to " .env " 
+ 2. run  ``` php artisan key:generate    ```
+ 3. configure " .env " file
+
+step 6 :</br>
+Set the table of DB </br>
+ 2. run  ``` php artisan migrate    ```
+
+   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTACT -->
@@ -84,7 +109,7 @@ Clone the repo
 
 Hadi Ghasemi - hadi77.hg@gmail.com - [https://t.me/hadigh98](https://t.me/hadigh98)
 
-Project Link: https://github.com/hadighasemi98/gallery-shop-with-laravel
+Project Link: https://github.com/hadighasemi98/gallery-shop-laravel-8
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
