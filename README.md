@@ -35,6 +35,7 @@ This is a small shop created using the Laravel framework for PHP. It allows you 
 -----
 <a name="item1"></a>
 ## Features:
+* Database First Approach
 * Users,categories,products,orders, and payment management
 * Mysql DB
 * Upload images service
