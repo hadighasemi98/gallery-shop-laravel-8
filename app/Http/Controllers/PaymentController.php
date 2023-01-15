@@ -11,13 +11,22 @@ use App\Models\User;
 use App\Services\Payments\PaymentService;
 use App\Services\Payments\Requests\IDPayRequest;
 use App\Services\Payments\Requests\IDPayVerifyRequest;
+use App\Utilities\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Config;
 
 class PaymentControllerCopy extends Controller
 {
+    private $IPGConfig;
+
+    public function __construct()
+    {
+        $this->IPGConfig = Config::get('IPG');
+    }
+
     public function pay(PayRequest $request)
     {
         try {
@@ -49,7 +58,7 @@ class PaymentControllerCopy extends Controller
                 'apiKey'  => config('services.gateways.id_pay.api_key'),
             ]);
 
-            $paymentService = new PaymentService(PaymentService::IDPAY, $idPayRequest);
+            $paymentService = new PaymentService($this->IPGConfig['gateway'], $idPayRequest);
             return $paymentService->pay();
         } catch (\Exception $e) {
             return back()->with('failed', $e->getMessage());
@@ -114,12 +123,11 @@ class PaymentControllerCopy extends Controller
 
     public function callback(Request $request)
     {
-        $callbackData = $request->all();
+        $request = $this->serializeRequest($request);
 
         $idPayVerifyRequest = new IDPayVerifyRequest([
-            'id' => $callbackData['id'],
-            'order_id' => $callbackData['order_id'],
-            'apiKey' => config('services.gateways.id_pay.api_key'),
+            'id' => $request['id'],
+            'order_id' => $request['order_id'],
         ]);
 
         $paymentService = new PaymentService(PaymentService::IDPAY, $idPayVerifyRequest);
@@ -150,5 +158,24 @@ class PaymentControllerCopy extends Controller
 
         Cookie::queue('basket', null);
         return redirect()->route('home.page')->with('success', __('conditions.basket.success_payment'));
+    }
+
+    /**
+     * It takes a request object and returns an array of the request's keys and values, where the keys
+     * are in snake case
+     * 
+     * @param Request The request object
+     * 
+     * @return The request is being serialized to snake case.
+     */
+    private function serializeRequest(Request $request)
+    {
+        $requestKeys = [];
+        foreach ($request->all() as $key => $value) {
+            $key = Helper::serializeToSnackCase($key);
+            $requestKeys[$key] = $value;
+        }
+
+        return $requestKeys;
     }
 }
