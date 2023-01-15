@@ -19,75 +19,76 @@ use Illuminate\Support\Str;
 class PaymentControllerCopy extends Controller
 {
     public function pay(PayRequest $request)
-    {        
+    {
         try {
 
             $user = $this->setUser($request);
 
-            $orderItem = json_decode(Cookie::get('basket'),true);
+            $orderItem = json_decode(Cookie::get('basket'), true);
 
-            if(count($orderItem) <= 0){
+            if (count($orderItem) <= 0) {
                 throw new \InvalidArgumentException(__('conditions.basket.empty_basket'));
             }
 
-            $products = Product::findMany(array_keys($orderItem)) ;
+            $products = Product::findMany(array_keys($orderItem));
 
-            $totalPrice = $products->sum( 'price' ) ;
+            $totalPrice = $products->sum('price');
 
-            $ref_code = Str::random(30) ;
+            $ref_code = Str::random(30);
 
-            $createdOrder = $this->setOrder($totalPrice , $user , $ref_code);
+            $createdOrder = $this->setOrder($totalPrice, $user, $ref_code);
 
-            $this->setOrderItems($products,$createdOrder);
+            $this->setOrderItems($products, $createdOrder);
 
-            $this->setPayment($createdOrder , $ref_code);
-            
+            $this->setPayment($createdOrder, $ref_code);
+
             $idPayRequest = new IDPayRequest([
                 'amount'    => $totalPrice,
                 'user'      => $user,
                 'order_id'  => $ref_code,
                 'apiKey'  => config('services.gateways.id_pay.api_key'),
             ]);
-                
-            $paymentService = new PaymentService(PaymentService::IDPAY , $idPayRequest);
-            return $paymentService->pay();
 
-        }catch (\Exception $e) {
-            return back()->with('failed' , $e->getMessage());
+            $paymentService = new PaymentService(PaymentService::IDPAY, $idPayRequest);
+            return $paymentService->pay();
+        } catch (\Exception $e) {
+            return back()->with('failed', $e->getMessage());
         }
-        
     }
 
-    private function setUser($request){
+    private function setUser($request)
+    {
 
         $validData = $request->validated();
 
         $user = User::firstOrCreate([
             'email'   => $validData['email'],
-        ],[
+        ], [
             'name'   => $validData['name'],
             'mobile' => $validData['mobile'],
         ]);
 
-        return $user ;
+        return $user;
     }
-    
-    private function  setOrderItems($products , $createdOrder){
 
-        $orderItemForCreateOrder = $products->map(function ($product){
-                
-            $currentProduct = $product->only('price','id') ;
+    private function  setOrderItems($products, $createdOrder)
+    {
+
+        $orderItemForCreateOrder = $products->map(function ($product) {
+
+            $currentProduct = $product->only('price', 'id');
             $currentProduct['product_id'] = $currentProduct['id'];
             unset($currentProduct['id']);
 
-            return $currentProduct ;
+            return $currentProduct;
         });
-        
+
         $createdOrder->orderItems()->createMany($orderItemForCreateOrder->toArray());
     }
 
 
-    private function  setOrder ($totalPrice , $user , $ref_code){
+    private function  setOrder($totalPrice, $user, $ref_code)
+    {
 
         $createdOrder = Order::Create([
             'amount' => $totalPrice,
@@ -96,10 +97,11 @@ class PaymentControllerCopy extends Controller
             'ref_code' => $ref_code,
         ]);
 
-        return $createdOrder ;
+        return $createdOrder;
     }
 
-    private function  setPayment ($createdOrder , $ref_code){
+    private function  setPayment($createdOrder, $ref_code)
+    {
 
         Payment::create([
             'gateways' => 'idPay',
@@ -110,9 +112,9 @@ class PaymentControllerCopy extends Controller
     }
 
 
-    public function callback (Request $request)
+    public function callback(Request $request)
     {
-        $callbackData = $request->all() ;
+        $callbackData = $request->all();
 
         $idPayVerifyRequest = new IDPayVerifyRequest([
             'id' => $callbackData['id'],
@@ -120,35 +122,33 @@ class PaymentControllerCopy extends Controller
             'apiKey' => config('services.gateways.id_pay.api_key'),
         ]);
 
-        $paymentService = new PaymentService(PaymentService::IDPAY , $idPayVerifyRequest);
+        $paymentService = new PaymentService(PaymentService::IDPAY, $idPayVerifyRequest);
 
-        $result = $paymentService->verify() ;
+        $result = $paymentService->verify();
 
-        if( !$result['status'] ){
-            return redirect()->route('home.checkout.show')->with('failed',__('conditions.basket.failed_payment'));
+        if (!$result['status']) {
+            return redirect()->route('home.checkout.show')->with('failed', __('conditions.basket.failed_payment'));
         }
 
-        $currentPayment = Payment::where('ref_code' , $result['data']['order_id'])->first() ;
+        $currentPayment = Payment::where('ref_code', $result['data']['order_id'])->first();
         $currentPayment->update([
             'status' => 'paid',
             'res_id' => $result['data']['track_id']
         ]);
-        
+
         $currentPayment->order()->update([
             'status' => 'paid',
         ]);
 
-        $orderedImages = $currentPayment->order->orderItems->map(function($orderItem){
+        $orderedImages = $currentPayment->order->orderItems->map(function ($orderItem) {
             return ($orderItem->product->source_url);
         });
 
         $currentUser = $currentPayment->order->user;
 
-        Mail::to($currentUser)->send(new SendOrderedImages($currentUser , $orderedImages->toArray() ));
+        Mail::to($currentUser)->send(new SendOrderedImages($currentUser, $orderedImages->toArray()));
 
         Cookie::queue('basket', null);
-        return redirect()->route('home.page')->with('success' , __('conditions.basket.success_payment'));
+        return redirect()->route('home.page')->with('success', __('conditions.basket.success_payment'));
     }
- 
 }
-
