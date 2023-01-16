@@ -2,12 +2,21 @@
 
 namespace App\Services\Payments\Contracts;
 
-abstract class AbstractProvider {
+use Illuminate\Support\Facades\Config;
 
-    protected RequestInterface $request ;
-    
-    public function __construct ( RequestInterface $request)
+abstract class AbstractProvider
+{
+
+    protected RequestInterface $request;
+    protected Config $IPGData;
+
+    public function __construct(RequestInterface $request)
     {
-        $this->request = $request ;
+        $this->request = $request;
+    }
+
+    protected function getIPGData()
+    {
+        return $this->IPGData;
     }
 }

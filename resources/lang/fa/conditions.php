@@ -7,27 +7,28 @@
 */
 
 return [
-    'basket'  =>[
-        'success_add'    => 'محصول به سبد خرید ، با موفقیت اضافه شد', 
-        'failed_add'     => 'محصول به سبد خرید ، اضافه نشد', 
+    'basket'  => [
+        'success_add'    => 'محصول به سبد خرید ، با موفقیت اضافه شد',
+        'failed_add'     => 'محصول به سبد خرید ، اضافه نشد',
         'success_delete' => 'محصول از سبد خرید ، با موفقیت حذف شد',
-        'already_add'    => 'محصول به سبد خرید قبلا اضافه شده است', 
-        'empty_basket'   => 'سبد خرید شما خالی میباشد', 
+        'already_add'    => 'محصول به سبد خرید قبلا اضافه شده است',
+        'empty_basket'   => 'سبد خرید شما خالی میباشد',
 
     ],
 
-    'failed_payment'  => 'پرداخت شما انجام نشد', 
-    'success_payment' => 'پرداخت با موفقیت انجام شد', 
+    'failed_payment'  => 'پرداخت شما انجام نشد',
+    'success_payment' => 'پرداخت با موفقیت انجام شد',
 
-    'success_add'     => ':key با موفقیت اضافه شد', 
-    'failed_add'      => ':key اضافه نشد', 
+    'success_add'     => ':key با موفقیت اضافه شد',
+    'failed_add'      => ':key اضافه نشد',
 
     'success_update'  => ':key با موفقیت ویرایش شد',
     'failed_update'   => ':key ویرایش نشد',
-    
+
     'success_delete'  => ':key با موفقیت حذف شد',
 
     'failed_upload_files'  => 'تصاویر آپلود نشدند',
 
     'un_verify_transaction_message' => 'پرداخت انجام نشد . در صورت کسر وجه ، نهایت تا 72 ساعت به حساب شما باز میگردد',
+
 ];

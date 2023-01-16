@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\Payments\PaymentService;
 use App\Services\Payments\Requests\IDPayRequest;
 use App\Services\Payments\Requests\IDPayVerifyRequest;
+use App\Services\Payments\Requests\VerifyRequest;
 use App\Utilities\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -125,12 +126,20 @@ class PaymentControllerCopy extends Controller
     {
         $request = $this->serializeRequest($request);
 
-        $idPayVerifyRequest = new IDPayVerifyRequest([
+        $myOrder = Order::where('id', $request['order_id'])->first();
+        $paymentSuccessStatus = $this->isPaymentSuccessFull($request, $myOrder);
+
+        if ($paymentSuccessStatus == false) {
+            return $this->showResultView(['status' => 'failed', 'track_id' => $request['order_id'], 'message' => __('conditions.failed_payment'), 'channel' => $myOrder->channel ?? 'app']);
+        }
+
+        $inquiryRequest = new VerifyRequest([
             'id' => $request['id'],
             'order_id' => $request['order_id'],
         ]);
 
-        $paymentService = new PaymentService(PaymentService::IDPAY, $idPayVerifyRequest);
+        $paymentService = new PaymentService($this->IPGConfig['gateway'], $inquiryRequest);
+        $inquiryResult = $paymentService->validateTransaction();
 
         $result = $paymentService->verify();
 
@@ -177,5 +186,48 @@ class PaymentControllerCopy extends Controller
         }
 
         return $requestKeys;
+    }
+
+
+    private function createPaymentLog(string $status, int $orderId, $description = null, $metaData = null)
+    {
+        return PaymentLog::create([
+            'order_id' => $orderId,
+            'status'  => $status,
+            'meta' => json_encode($metaData),
+            'description' => $description,
+        ]);
+    }
+
+    private function isPaymentSuccessFull($request, $order)
+    {
+        $paymentSuccessStatus = $this->IPGConfig['gateway']['callbackSuccessStatus'];
+
+        $this->createPaymentLog('callback_data', $request['order_id'], 'دیتای برگشتی از درگاه دریافت شد', json_encode($request));
+
+        if (!$order) {
+            return false;
+        }
+
+        if ($request['status'] != $paymentSuccessStatus) {
+            $this->createPaymentLog('unexpected_status', $request['order_id'], 'status_code:' . $request['status'] . ' پرداخت انجام نشد', json_encode($request));
+
+            $order->update([
+                'status' => 'error',
+                'meta' => json_encode($request),
+                'track_id' => $request['order_id'] ?? null,
+                'ref_id' => $request['tr_id'],
+                'payment_time' => now(),
+            ]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private function showResultView($data)
+    {
+        return view('Payments.ReturnToApp', compact('data'));
     }
 }
