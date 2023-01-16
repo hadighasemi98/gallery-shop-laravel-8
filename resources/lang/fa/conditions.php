@@ -29,6 +29,4 @@ return [
 
     'failed_upload_files'  => 'تصاویر آپلود نشدند',
 
-    'un_verify_transaction_message' => 'پرداخت انجام نشد . در صورت کسر وجه ، نهایت تا 72 ساعت به حساب شما باز میگردد',
-
 ];

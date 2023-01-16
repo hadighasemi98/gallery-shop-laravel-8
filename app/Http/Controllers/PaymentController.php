@@ -13,6 +13,7 @@ use App\Services\Payments\Requests\IDPayRequest;
 use App\Services\Payments\Requests\IDPayVerifyRequest;
 use App\Services\Payments\Requests\VerifyRequest;
 use App\Utilities\Helper;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -141,32 +142,55 @@ class PaymentControllerCopy extends Controller
         $paymentService = new PaymentService($this->IPGConfig['gateway'], $inquiryRequest);
         $inquiryResult = $paymentService->validateTransaction();
 
-        $result = $paymentService->verify();
-
-        if (!$result['status']) {
-            return redirect()->route('home.checkout.show')->with('failed', __('conditions.basket.failed_payment'));
+        if ($myOrder->amount * 10 != $inquiryResult['payedAmount']) {
+            $this->createPaymentLog('callback_data', $request['order_id'], 'دیتای برگشتی از درگاه دریافت شد', json_encode($request));
+            return $this->showResultView(['message' => __('payment.wrong_amount'), "track_id" => $myOrder->id, "status" => 'failed', 'channel' => $myOrder->channel]);
         }
 
-        $currentPayment = Payment::where('ref_code', $result['data']['order_id'])->first();
-        $currentPayment->update([
-            'status' => 'paid',
-            'res_id' => $result['data']['track_id']
-        ]);
+        if ($myOrder->status != 'paid') {
+            try {
 
-        $currentPayment->order()->update([
-            'status' => 'paid',
-        ]);
+                DB::beginTransaction();
 
-        $orderedImages = $currentPayment->order->orderItems->map(function ($orderItem) {
-            return ($orderItem->product->source_url);
-        });
+                $result = $paymentService->verify();
 
-        $currentUser = $currentPayment->order->user;
+                if (!$result['status']) {
+                    DB::rollback();
 
-        Mail::to($currentUser)->send(new SendOrderedImages($currentUser, $orderedImages->toArray()));
+                    $this->createPaymentLog('callback_data', $request['order_id'], __('payment.un_verify_transaction_message'), json_encode($request));
+                    return redirect()->route('home.checkout.show')->with('failed', __('payment.failed_payment'));
+                }
 
-        Cookie::queue('basket', null);
-        return redirect()->route('home.page')->with('success', __('conditions.basket.success_payment'));
+                $currentPayment = Payment::where('ref_code', $result['data']['order_id'])->first();
+                $currentPayment->update([
+                    'status' => 'paid',
+                    'res_id' => $result['data']['track_id']
+                ]);
+
+                $currentPayment->order()->update([
+                    'status' => 'paid',
+                ]);
+
+                $orderedImages = $currentPayment->order->orderItems->map(function ($orderItem) {
+                    return ($orderItem->product->source_url);
+                });
+
+                $currentUser = $currentPayment->order->user;
+
+                Mail::to($currentUser)->send(new SendOrderedImages($currentUser, $orderedImages->toArray()));
+
+                Cookie::queue('basket', null);
+                $this->createPaymentLog('fulfillment_data', $request['order_id'], __('payment.giving_order'));
+
+                return redirect()->route('home.page')->with('success', __('payment.success_payment'));
+            } catch (Exception $e) {
+
+                $this->createPaymentLog('catch_section', $request['order_id'], __('payment.failed_payment'), json_encode(["message" => $e->getMessage(), 'Line : ' => $e->getLine()]));
+                DB::rollback();
+
+                return $this->showResultView(['message' => __('payment.un_verify_transaction_message'), "status" => 'failed', "track_id" => $request['order_id'], 'channel' => $myOrder->channel]);
+            }
+        }
     }
 
     /**
