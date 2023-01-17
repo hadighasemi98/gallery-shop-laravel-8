@@ -2,7 +2,9 @@
 
 namespace App\Utilities;
 
-class Helper
+use App\Utilities\Helpers\Contracts\HelperInterface;
+
+class Helper implements HelperInterface
 {
 
     /**

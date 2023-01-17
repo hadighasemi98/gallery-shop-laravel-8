@@ -2,10 +2,11 @@
 
 namespace App\Utilities;
 
+use App\Utilities\Helpers\Contracts\HelperInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
-class PaymentHelper
+class PaymentHelper implements HelperInterface
 {
 
     private $IPGConfig;
@@ -72,6 +73,13 @@ class PaymentHelper
         return true;
     }
 
+    /**
+     * It returns the callback view with appropriate message & data
+     * 
+     * @param data The data that you want to pass to the view.
+     * 
+     * @return The view is being returned.
+     */
     public function showResultView($data)
     {
         return view('Payments.ReturnToApp', compact('data'));
