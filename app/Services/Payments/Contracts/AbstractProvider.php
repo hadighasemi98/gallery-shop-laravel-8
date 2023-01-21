@@ -6,13 +6,15 @@ use Illuminate\Support\Facades\Config;
 
 abstract class AbstractProvider
 {
-
     protected RequestInterface $request;
-    protected Config $IPGData;
+    protected $IPGData;
 
     public function __construct(RequestInterface $request)
     {
         $this->request = $request;
+
+        $IPGConfig = Config::get('IPG');
+        $this->IPGData = $IPGConfig[$IPGConfig['gateway']];
     }
 
     protected function getIPGData()
