@@ -35,26 +35,9 @@ This is a small shop created using the Laravel framework for PHP. It allows you 
 -----
 <a name="item1"></a>
 ## Features:
-* Database First Approach
-* Users,categories,products,orders, and payment management
-* Mysql DB
-* Upload images service
-* Filtering categories
-* Search products
+* Image uploader service
 * Payment service
 -----
-
-## Description :
-
-In this project , I tried to implement the SOLID principle . It was my first project with Laravel 8.
-
- In CMS panel you can :
- - Do CRUD operations .
- - See your orders and check payments.
- - Check order items in every order
- - Easily extensible payment service
- - Payment with mobile number and email
- - Sending images and files that you bought with Email
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
