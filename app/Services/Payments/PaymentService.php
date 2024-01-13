@@ -46,7 +46,7 @@ class PaymentService
         $className = 'App\Services\Payments\Providers\\' . $this->providerName;
 
         if (!class_exists($className)) {
-            throw new ProviderNotFindException('درگاه پرداخت انتخابی پیدا نشد');
+            throw new ProviderNotFindException(__('errors.paymentGateways.providerNotFoundMessage'));
         }
         return new $className($this->request);
     }
