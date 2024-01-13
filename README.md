@@ -39,9 +39,6 @@ This is a small shop created using the Laravel framework for PHP. It allows you 
 * Payment service
 -----
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
------
 <!-- GETTING STARTED -->
 ## Getting Started
 
